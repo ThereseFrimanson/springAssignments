@@ -35,14 +35,23 @@ public class CustomerManagementMockImpl implements CustomerManagementService {
 
 	@Override
 	public Customer findCustomerById(String customerId) throws CustomerNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		Customer customer = customerMap.get(customerId);
+		if (customer == null) {
+			throw new CustomerNotFoundException();
+		}
+
+		return customer;
 	}
 
 	@Override
 	public List<Customer> findCustomersByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Customer> matchingCustomers = new ArrayList<>();
+		for (Customer customer : customerMap.values()) {
+			if(customer.getCompanyName().equalsIgnoreCase(name)) {
+				matchingCustomers.add(customer);
+			}
+		}
+		return matchingCustomers;
 	}
 
 	@Override
@@ -52,15 +61,19 @@ public class CustomerManagementMockImpl implements CustomerManagementService {
 
 	@Override
 	public Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException {
-		return null;
+		return findCustomerById(customerId);
 	}
 
 	@Override
 	public void recordCall(String customerId, Call callDetails) throws CustomerNotFoundException {
 		//First find the customer
+		Customer customer = findCustomerById(customerId);
 
 		//Call the addCall on the customer
+		customer.addCall(callDetails);
 
 	}
 
 }
+
+
