@@ -5,33 +5,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.yrgo.dataaccess.ActionDao;
+import com.yrgo.dataaccess.ActionDaoJdbcImpl;
 import com.yrgo.domain.Action;
 
 public class DiaryManagementServiceMockImpl implements DiaryManagementService {
+	private ActionDao actionDao;
 
-	private Set<Action>allActions= new HashSet<Action>();
+	public DiaryManagementServiceMockImpl(ActionDao actionDao) {
+		this.actionDao = actionDao;
+	}
+	// private Set<Action>allActions= new HashSet<Action>();
 
 	@Override
 	public void recordAction(Action action) {
-		// TODO Auto-generated method stub
-
+	actionDao.create(action);
 	}
 
-	//Hint:
-	//Create a list<Action>
-	//In the for each loop going through the list use this condition: "if(action.getOwningUser().equals(requiredUser) && !action.isComplete())" to add a new action to the list.
 	public List<Action> getAllIncompleteActions(String requiredUser) {
-		List<Action> incompleteActions = new ArrayList<>();
-
-		for(Action action : allActions) {
-			if(action.getOwningUser().equals(requiredUser) && !action.isComplete()){
-				incompleteActions.add(action);
-			}
-		}
-		return incompleteActions;
+		return actionDao.getIncompleteActions(requiredUser);
 	}
-
 }
 
+		//for(Action action : allActions) {
+		//		if(action.getOwningUser().equals(requiredUser) && !action.isComplete()){
+		//		incompleteActions.add(action);
+		//		}
+		//		}
+		//		return incompleteActions;
 
 

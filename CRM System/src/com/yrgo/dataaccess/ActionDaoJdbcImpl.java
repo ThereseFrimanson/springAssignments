@@ -15,7 +15,7 @@ public class ActionDaoJdbcImpl implements ActionDao {
 	private static final String DELETE_SQL = "DELETE FROM ACTION WHERE ACTION_ID=?";
 	private static final String UPDATE_SQL = "UPDATE ACTION SET DETAILS=?, COMPLETE=?, OWNING_USER=?, REQUIRED_BY=? WHERE ACTION_ID=?";
 	private static final String INSERT_SQL = "INSERT INTO ACTION (DETAILS, COMPLETE, OWNING_USER, REQUIRED_BY) VALUES (?,?,?,?)";
-	private static final String GET_INCOMPLETE_SQL = "SELECT ACTION_ID, DETAILS, COMPLETE, OWNING_USER, REQUIRED_BY FROM ACTION WHERE OWNING_USER=? AND COMPLETE=?";
+	private static final String GET_INCOMPLETE_SQL = "SELECT ACTION_ID, DETAILS, COMPLETE, OWNING_USER, REQUIRED_BY FROM ACTION WHERE OWNING_USER=? AND COMPLETE=0";
 
 	private JdbcTemplate template;
 
@@ -36,8 +36,11 @@ public class ActionDaoJdbcImpl implements ActionDao {
 	}
 
 	public List<Action> getIncompleteActions(String userId) {
-		return this.template.query(GET_INCOMPLETE_SQL, new ActionRowMapper(), userId, false);
+		List<Action> actions = this.template.query(GET_INCOMPLETE_SQL, new ActionRowMapper(), userId);
+		System.out.println("Found " + actions.size() + " incomplete actions for user: " + userId);
+		return actions;
 	}
+
 
 	public void update(Action actionToUpdate) throws RecordNotFoundException 	{
 		this.template.update(UPDATE_SQL,actionToUpdate.getDetails(),actionToUpdate.isComplete(), actionToUpdate.getOwningUser(), actionToUpdate.getRequiredBy().getTime(),  actionToUpdate.getActionId() );

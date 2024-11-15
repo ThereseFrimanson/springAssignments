@@ -1,5 +1,6 @@
 package com.yrgo.services.calls;
 
+import com.yrgo.dataaccess.CustomerDao;
 import com.yrgo.domain.Action;
 import com.yrgo.domain.Call;
 import com.yrgo.services.customers.CustomerManagementService;
@@ -12,10 +13,12 @@ public class CallHandlingServiceImpl implements CallHandlingService{
 
     private CustomerManagementService customerManagementService;
     private DiaryManagementService diaryManagementService;
+    private CustomerDao customerDao;
 
-    public CallHandlingServiceImpl(CustomerManagementService customerManagementService, DiaryManagementService diaryManagementService) {
+    public CallHandlingServiceImpl(CustomerManagementService customerManagementService, DiaryManagementService diaryManagementService, CustomerDao customerDao) {
         this.customerManagementService = customerManagementService;
         this.diaryManagementService = diaryManagementService;
+        this.customerDao = customerDao;
     }
 
     @Override
