@@ -1,20 +1,16 @@
-### direct log messages to stdout ###
-log4j.appender.mainlog=org.apache.log4j.ConsoleAppender
-log4j.appender.mainlog.Target=System.out
-log4j.appender.mainlog.layout=org.apache.log4j.PatternLayout
-log4j.appender.mainlog.layout.ConversionPattern=%d{ABSOLUTE} %5p %c:%L - %m%n
-
-### Root logging; 
-log4j.rootLogger=FATAL, mainlog
-
-# Uncomment the appropriate line to enable logging for your particular tx manager
-
-log4j.logger.org.springframework.jdbc.datasource.DataSourceTransactionManager=DEBUG
-log4j.logger.org.springframework.orm.hibernate3.HibernateTransactionManager=DEBUG
-log4j.logger.org.springframework.orm.jpa.JpaTransactionManager=DEBUG
-
-log4j.logger.org.springframework.jdbc.core=DEBUG
-log4j.logger.org.springframework.jdbc.datasource=DEBUG
-log4j.logger.org.springframework.jdbc.core.JdbcTemplate=TRACE
-
-
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+  </Appenders>
+   <Loggers>
+        <Logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="DEBUG"/>
+        <!-- <Logger name="org.springframework.orm.hibernate3.HibernateTransactionManager" level="DEBUG"/>  --> 
+        <!--  <Logger name="org.springframework.orm.jpa.JpaTransactionManager" level="DEBUG"/>  -->
+        <Root level="fatal">
+          <AppenderRef ref="Console"/>
+        </Root>
+  </Loggers>
+</Configuration>

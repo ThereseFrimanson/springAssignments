@@ -3,30 +3,29 @@ package com.yrgo.services.customers;
 import com.yrgo.dataaccess.CustomerDao;
 import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public class CustomerManagementServiceProductionImpl implements CustomerManagementService{
+@Service
+@Transactional
+public class CustomerManagementServiceProductionImpl implements CustomerManagementService {
 
+    @Autowired
     private CustomerDao customerDao;
-
-    public CustomerManagementServiceProductionImpl(CustomerDao customerDao) {
-        this.customerDao = customerDao;
-    }
 
     @Override
     public void newCustomer(Customer newCustomer) {
-
     }
 
     @Override
     public void updateCustomer(Customer changedCustomer) {
-
     }
 
     @Override
     public void deleteCustomer(Customer oldCustomer) {
-
     }
 
     @Override
@@ -51,6 +50,5 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
 
     @Override
     public void recordCall(String customerId, Call callDetails) throws CustomerNotFoundException {
-
     }
 }
