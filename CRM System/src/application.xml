@@ -42,10 +42,6 @@
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
 
-    <bean id="customerService" class="com.yrgo.services.customers.CustomerManagementServiceProductionImpl" autowire="byName"/>
-    <bean id="diaryService" class="com.yrgo.services.diary.DiaryManagementServiceMockImpl" autowire="byName"/>
-    <bean id="callService" class="com.yrgo.services.calls.CallHandlingServiceImpl" autowire="byName"/>
-
     <bean id="performanceTimingAdvice"
           class="com.yrgo.advice.PerformanceTimingAdvice"/>
     <aop:config>
@@ -56,5 +52,10 @@
     </aop:config>
 
     <context:component-scan base-package="com.yrgo"/>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
 </beans>
