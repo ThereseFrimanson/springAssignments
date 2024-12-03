@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 @Transactional
+@Service("diaryService")
 public class DiaryManagementServiceMockImpl implements DiaryManagementService {
-    @Autowired
-    private ActionDao actionDao;
     private Set<Action> allActions = new HashSet<Action>();
 
     @Override

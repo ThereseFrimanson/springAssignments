@@ -1,6 +1,7 @@
 package com.yrgo.services.customers;
 
 import com.yrgo.dataaccess.CustomerDao;
+import com.yrgo.dataaccess.RecordNotFoundException;
 import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,46 +10,55 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+
 @Transactional
+@Service("customerService")
 public class CustomerManagementServiceProductionImpl implements CustomerManagementService {
 
-    @Autowired
     private CustomerDao customerDao;
+
+    @Autowired
+    public CustomerManagementServiceProductionImpl(CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
 
     @Override
     public void newCustomer(Customer newCustomer) {
+        customerDao.create(newCustomer);
     }
 
     @Override
-    public void updateCustomer(Customer changedCustomer) {
+    public void updateCustomer(Customer changedCustomer) throws RecordNotFoundException {
+        customerDao.update(changedCustomer);
     }
 
     @Override
-    public void deleteCustomer(Customer oldCustomer) {
+    public void deleteCustomer(Customer oldCustomer) throws RecordNotFoundException {
+        customerDao.delete(oldCustomer);
     }
 
     @Override
-    public Customer findCustomerById(String customerId) throws CustomerNotFoundException {
-        return null;
+    public Customer findCustomerById(String customerId) throws CustomerNotFoundException, RecordNotFoundException {
+        return customerDao.getById(customerId);
     }
 
     @Override
     public List<Customer> findCustomersByName(String name) {
-        return null;
+        return customerDao.getByName(name);
     }
 
     @Override
     public List<Customer> getAllCustomers() {
-        return null;
+        return customerDao.getAllCustomers();
     }
 
     @Override
-    public Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException {
-        return null;
+    public Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException, RecordNotFoundException {
+        return customerDao.getFullCustomerDetail(customerId);
     }
 
     @Override
-    public void recordCall(String customerId, Call callDetails) throws CustomerNotFoundException {
+    public void recordCall(String customerId, Call callDetails) throws CustomerNotFoundException, RecordNotFoundException {
+        customerDao.addCall(callDetails, customerId);
     }
 }

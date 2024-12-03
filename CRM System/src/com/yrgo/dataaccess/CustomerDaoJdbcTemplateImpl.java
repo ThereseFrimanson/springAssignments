@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -27,6 +28,7 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
     private static final String GET_ALL_CUSTOMER_CALLS = "SELECT  CALL_ID, CUSTOMER_ID, DATE_AND_TIME, NOTES FROM CUSTOMER_CALLS WHERE CUSTOMER_ID=?";
     private JdbcTemplate template;
 
+
     public CustomerDaoJdbcTemplateImpl(JdbcTemplate template){
         this.template = template;
     }
@@ -39,6 +41,7 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
                                 customer.getEmail());
     }
 
+    @PostConstruct
     private void createTables() {
         try{
             this.template.update(CREATE_CUSTOMER_TABLE);

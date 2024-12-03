@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.yrgo.dataaccess.RecordNotFoundException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.yrgo.domain.Action;
@@ -38,6 +39,8 @@ public class SimpleClient {
             callService.recordCall("CS03939", newCall, actions);
         }catch (CustomerNotFoundException e){
             System.out.println("That customer doesn't exist");
+        } catch (RecordNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         System.out.println("Here are the outstanding actions:");
